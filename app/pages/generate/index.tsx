@@ -1,7 +1,13 @@
+import Layout from "@/components/wrapper/Layout";
+
 const index = () => {
   return (
-    <div className="min-h-screen">So yea huhu</div>
-  )
-}
+    <>
+      <Layout>
+        <div>So yea huhu</div>
+      </Layout>
+    </>
+  );
+};
 
-export default index
+export default index;

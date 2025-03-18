@@ -54,7 +54,7 @@ export default function Home() {
         </Link>
       </div>
 
-      <div className="sm:absolute sm:bottom-0 w-full px-20 py-10 flex justify-between">
+      <div className="sm:absolute sm:bottom-0 w-full px-20 py-10 flex justify-center">
         <Link
           href="https://github.com/eracoding/AdaptiveCV"
           className="flex items-center space-x-2"
