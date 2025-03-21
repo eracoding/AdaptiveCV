@@ -5,6 +5,8 @@ import { Suspense } from "react";
 import Welcome from "@/components/welcome";
 import { Group } from "@mantine/core";
 
+// need to do toast something went wrong
+
 export default function Home() {
   return (
     <main className="relative flex min-h-screen flex-col items-center justify-center">

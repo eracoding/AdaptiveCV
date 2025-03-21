@@ -7,17 +7,18 @@ import {
   SegmentedControl,
   SimpleGrid,
   Text,
+  Textarea,
   Title,
 } from "@mantine/core";
 import { useState } from "react";
 import BasicPhoto from "@/components/icon/BasicFile";
 import { Dropzone, DropzoneProps, PDF_MIME_TYPE } from "@mantine/dropzone";
+import classes from "@/styles/text.module.css";
 
 const index = (props: Partial<DropzoneProps>) => {
   const [mode, setMode] = useState("generate");
   const [file, setFile] = useState<File | null>(null);
-
-  console.log("file", file?.name);
+  const [prompt, setPrompt] = useState("");
 
   return (
     <>
@@ -34,11 +35,11 @@ const index = (props: Partial<DropzoneProps>) => {
 
         <SimpleGrid
           mt={50}
-          cols={2}
+          cols={{ base: 1, sm: 1, md: 2, lg: 2 }}
           spacing={{ base: 10, sm: "xl" }}
           verticalSpacing={{ base: "md", sm: "xl" }}
         >
-          <Card p={"sm"} shadow="sm" radius="md" withBorder w={"100%"}>
+          {mode == "generate" && <Card p={"sm"} shadow="sm" radius="md" withBorder w={"100%"}>
             <Title order={3} mb={12}>
               Upload file
             </Title>
@@ -109,9 +110,48 @@ const index = (props: Partial<DropzoneProps>) => {
             >
               Submit
             </Button>
-          </Card>
+          </Card>}
 
-          <div className="border-red-100 border-2">2</div>
+          {mode == "optimize" && <Card p={"sm"} shadow="sm" radius="md" withBorder w={"100%"}>
+            <Title order={3} mb={12}>
+              Enter Details
+            </Title>
+
+            <Textarea
+              autoFocus
+              placeholder="Enter your details..."
+              mih={255}
+              minRows={2}
+              maxRows={4}
+              value={prompt}
+              onChange={(event) => setPrompt(event.currentTarget.value)}
+              classNames={{
+                root: classes.root,
+                wrapper: classes.wrapper,
+                input: classes.input,
+              }}
+            />
+
+            <Button
+              variant="filled"
+              color="dark"
+              size="md"
+              radius="xl"
+              mt={12}
+              disabled={!prompt}
+            >
+              Submit
+            </Button>
+          </Card>}
+
+          <Card p={"sm"} shadow="sm" radius="md"  w={"100%"} className="border-2 border-dashed border-gray-500 !bg-white/30">
+            {/* big green success icon */}
+            {/* download button */}
+
+            {/* some big relevant icon/illustration */}
+            <Title ta={'center'}>Your brand new CV</Title>
+            <Text ta={'center'}>This is where your new CV will appear</Text>
+          </Card>
         </SimpleGrid>
       </Layout>
     </>
