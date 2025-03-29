@@ -40,7 +40,7 @@ const index = (props: Partial<DropzoneProps>) => {
         onClose={() => {}}
         centered
         withCloseButton={false}
-        size={'sm'}
+        size={'xs'}
       >
         <Loading />
       </Modal>
