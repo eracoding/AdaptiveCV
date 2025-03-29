@@ -14,19 +14,22 @@ export const handleDownload = (downloadUrl: string) => {
 
 export const handleFileUpload = async (
   file: File | null,
-  setMessage: Dispatch<SetStateAction<string>>,
   setLoading: Dispatch<SetStateAction<boolean>>,
   setDownloadUrl: Dispatch<SetStateAction<string | null>>,
   open: () => void, // open loading info model
   close: () => void // close loading info model
 ) => {
   if (!file) {
-    setMessage("Please select a file");
+    notifications.show({
+      title: "Error",
+      message: "Please select a file",
+      color: "red",
+      position: "top-right",
+    });
     return;
   }
   setLoading(true);
   open();
-  setMessage("");
   setDownloadUrl(null);
   const formData = new FormData();
   formData.append("file", file);
@@ -39,7 +42,6 @@ export const handleFileUpload = async (
     const blob = await response.blob();
     setDownloadUrl(URL.createObjectURL(blob));
   } catch (error: any) {
-    setMessage("Error: " + error.message);
     notifications.show({
       title: "Error",
       message: error.message,
@@ -52,14 +54,12 @@ export const handleFileUpload = async (
 };
 
 export const handleTextUpload = async (
-  setMessage: Dispatch<SetStateAction<string>>,
   setLoading: Dispatch<SetStateAction<boolean>>,
   setDownloadUrl: Dispatch<SetStateAction<string | null>>,
   open: () => void, // open loading info model
   close: () => void // close loading info model
 ) => {
   setLoading(true);
-  setMessage("");
   setDownloadUrl(null);
   open();
   const text = "yoyoo"; // need tp update to get the text from the textarea
@@ -73,7 +73,6 @@ export const handleTextUpload = async (
     const blob = await response.blob();
     setDownloadUrl(URL.createObjectURL(blob));
   } catch (error: any) {
-    setMessage("Error: " + error.message);
     notifications.show({
       title: "Error",
       message: error.message,

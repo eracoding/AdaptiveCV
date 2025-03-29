@@ -2,6 +2,7 @@ import { ActionIcon, Affix, Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import GenerateInfo from "./modal/GenerateInfo";
 import OptimizeInfo from "./modal/OptimizeInfo";
+import QuestionMark from "./icon/QuestionMark";
 
 const Information = ({ type }: { type: string }) => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -22,11 +23,13 @@ const Information = ({ type }: { type: string }) => {
           variant="default"
           size={52}
           radius="xl"
-          aria-label="Information"
+          aria-label="Help Guide"
           color="black"
           onClick={open}
+          bg={"black"}
+          style={{"border": 'none'}}
         >
-          ?
+          <QuestionMark />
         </ActionIcon>
       </Affix>
     </>

@@ -23,13 +23,14 @@ import {
   handleFileUpload,
   handleTextUpload,
 } from "@/utils/api";
+import SuccessInfo from "@/components/SuccessInfo";
+import FileLand from "@/components/FileLand";
 
 const index = (props: Partial<DropzoneProps>) => {
   const [mode, setMode] = useState("generate");
   const [file, setFile] = useState<File | null>(null);
   const [prompt, setPrompt] = useState("");
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
   const [downloadUrl, setDownloadUrl] = useState<null | string>(null);
   const [opened, { open, close }] = useDisclosure(false); // for loading info model
 
@@ -41,6 +42,10 @@ const index = (props: Partial<DropzoneProps>) => {
         centered
         withCloseButton={false}
         size={'xs'}
+        overlayProps={{
+          backgroundOpacity: 0.55,
+          blur: 3,
+        }}
       >
         <Loading />
       </Modal>
@@ -134,7 +139,6 @@ const index = (props: Partial<DropzoneProps>) => {
                 onClick={() =>
                   handleFileUpload(
                     file,
-                    setMessage,
                     setLoading,
                     setDownloadUrl,
                     open,
@@ -178,7 +182,6 @@ const index = (props: Partial<DropzoneProps>) => {
                 disabled={!prompt}
                 onClick={() =>
                   handleTextUpload(
-                    setMessage,
                     setLoading,
                     setDownloadUrl,
                     open,
@@ -201,10 +204,10 @@ const index = (props: Partial<DropzoneProps>) => {
           >
             {/* big green success icon */}
             {/* download button */}
+            {downloadUrl && <SuccessInfo />}
 
             {/* some big relevant icon/illustration */}
-            <Title ta={"center"}>Your brand new CV</Title>
-            <Text ta={"center"}>This is where your new CV will appear</Text>
+            {!downloadUrl && <FileLand />}
 
             {downloadUrl && (
               <button
@@ -224,5 +227,3 @@ const index = (props: Partial<DropzoneProps>) => {
 };
 
 export default index;
-
-// bihan, i had a job in 2021 i was frontend dev...
