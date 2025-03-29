@@ -4,6 +4,7 @@ import {
   Button,
   Card,
   Group,
+  Modal,
   SegmentedControl,
   SimpleGrid,
   Text,
@@ -14,14 +15,36 @@ import { useState } from "react";
 import BasicPhoto from "@/components/icon/BasicFile";
 import { Dropzone, DropzoneProps, PDF_MIME_TYPE } from "@mantine/dropzone";
 import classes from "@/styles/text.module.css";
+import Information from "@/components/Information";
+import { useDisclosure } from "@mantine/hooks";
+import Loading from "@/components/modal/Loading";
+import {
+  handleDownload,
+  handleFileUpload,
+  handleTextUpload,
+} from "@/utils/api";
 
 const index = (props: Partial<DropzoneProps>) => {
   const [mode, setMode] = useState("generate");
   const [file, setFile] = useState<File | null>(null);
   const [prompt, setPrompt] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [downloadUrl, setDownloadUrl] = useState<null | string>(null);
+  const [opened, { open, close }] = useDisclosure(false); // for loading info model
 
   return (
     <>
+      <Modal
+        opened={opened}
+        onClose={() => {}}
+        centered
+        withCloseButton={false}
+        size={'sm'}
+      >
+        <Loading />
+      </Modal>
+
       <Layout>
         <SegmentedControl
           mt={50}
@@ -39,121 +62,163 @@ const index = (props: Partial<DropzoneProps>) => {
           spacing={{ base: 10, sm: "xl" }}
           verticalSpacing={{ base: "md", sm: "xl" }}
         >
-          {mode == "generate" && <Card p={"sm"} shadow="sm" radius="md" withBorder w={"100%"}>
-            <Title order={3} mb={12}>
-              Upload file
-            </Title>
-            <Dropzone
-              onDrop={(files) => {
-                console.log("accepted files", files);
-                setFile(files[0]);
-              }}
-              onReject={(files) => console.log("rejected files", files)}
-              maxSize={5 * 1024 ** 2}
-              accept={PDF_MIME_TYPE}
-              {...props}
-            >
-              <Group
-                justify="center"
-                gap="xl"
-                mih={220}
-                style={{ pointerEvents: "none" }}
+          {mode == "optimize" && (
+            <Card p={"sm"} shadow="sm" radius="md" withBorder w={"100%"}>
+              <Title order={3} mb={12}>
+                Upload file
+              </Title>
+              <Dropzone
+                onDrop={(files) => {
+                  console.log("accepted files", files);
+                  setFile(files[0]);
+                }}
+                onReject={(files) => console.log("rejected files", files)}
+                maxSize={5 * 1024 ** 2}
+                accept={PDF_MIME_TYPE}
+                {...props}
               >
-                <Dropzone.Accept>
-                  <BasicPhoto />
-                </Dropzone.Accept>
-                <Dropzone.Reject>no</Dropzone.Reject>
-                <Dropzone.Idle>
-                  <BasicPhoto />
-                </Dropzone.Idle>
+                <Group
+                  justify="center"
+                  gap="xl"
+                  mih={220}
+                  style={{ pointerEvents: "none" }}
+                >
+                  <Dropzone.Accept>
+                    <BasicPhoto />
+                  </Dropzone.Accept>
+                  <Dropzone.Reject>no</Dropzone.Reject>
+                  <Dropzone.Idle>
+                    <BasicPhoto />
+                  </Dropzone.Idle>
 
-                <div>
-                  <Text size="xl" inline>
-                    Drag files here or click to select files
-                  </Text>
-                  <Text size="sm" c="dimmed" inline mt={7}>
-                    Attach only one file, the file should not exceed 5mb
-                  </Text>
-                </div>
-              </Group>
-            </Dropzone>
-
-            {/* preview file name */}
-            {file && (
-              <Card mt={12} className="!bg-[#e7e8e9]">
-                <Group justify="space-between">
-                  <Text truncate="end" w={"80%"}>
-                    <span className="font-semibold">File Uploaded: </span>
-                    {file.name}
-                  </Text>
-
-                  <ActionIcon
-                    size={"md"}
-                    variant="light"
-                    aria-label="Remove file"
-                    color="red"
-                    onClick={() => setFile(null)}
-                  >
-                    X
-                  </ActionIcon>
+                  <div>
+                    <Text size="xl" inline>
+                      Drag files here or click to select files
+                    </Text>
+                    <Text size="sm" c="dimmed" inline mt={7}>
+                      Attach only one file, the file should not exceed 5mb
+                    </Text>
+                  </div>
                 </Group>
-              </Card>
-            )}
+              </Dropzone>
 
-            <Button
-              variant="filled"
-              color="dark"
-              size="md"
-              radius="xl"
-              mt={12}
-              disabled={!file}
-            >
-              Submit
-            </Button>
-          </Card>}
+              {/* preview file name */}
+              {file && (
+                <Card mt={12} className="!bg-[#e7e8e9]">
+                  <Group justify="space-between">
+                    <Text truncate="end" w={"80%"}>
+                      <span className="font-semibold">File Uploaded: </span>
+                      {file.name}
+                    </Text>
 
-          {mode == "optimize" && <Card p={"sm"} shadow="sm" radius="md" withBorder w={"100%"}>
-            <Title order={3} mb={12}>
-              Enter Details
-            </Title>
+                    <ActionIcon
+                      size={"md"}
+                      variant="light"
+                      aria-label="Remove file"
+                      color="red"
+                      onClick={() => setFile(null)}
+                    >
+                      X
+                    </ActionIcon>
+                  </Group>
+                </Card>
+              )}
 
-            <Textarea
-              autoFocus
-              placeholder="Enter your details..."
-              mih={255}
-              minRows={2}
-              maxRows={4}
-              value={prompt}
-              onChange={(event) => setPrompt(event.currentTarget.value)}
-              classNames={{
-                root: classes.root,
-                wrapper: classes.wrapper,
-                input: classes.input,
-              }}
-            />
+              <Button
+                variant="filled"
+                color="dark"
+                size="md"
+                radius="xl"
+                mt={12}
+                disabled={!file}
+                onClick={() =>
+                  handleFileUpload(
+                    file,
+                    setMessage,
+                    setLoading,
+                    setDownloadUrl,
+                    open,
+                    close
+                  )
+                }
+                loading={loading}
+              >
+                Submit
+              </Button>
+            </Card>
+          )}
 
-            <Button
-              variant="filled"
-              color="dark"
-              size="md"
-              radius="xl"
-              mt={12}
-              disabled={!prompt}
-            >
-              Submit
-            </Button>
-          </Card>}
+          {mode == "generate" && (
+            <Card p={"sm"} shadow="sm" radius="md" withBorder w={"100%"}>
+              <Title order={3} mb={12}>
+                Enter Details
+              </Title>
 
-          <Card p={"sm"} shadow="sm" radius="md"  w={"100%"} className="border-2 border-dashed border-gray-500 !bg-white/30">
+              <Textarea
+                autoFocus
+                placeholder="John Doe | MSc in Data Science | Python, Machine Learning | 3 years experience in AI research"
+                mih={255}
+                minRows={2}
+                maxRows={4}
+                value={prompt}
+                onChange={(event) => setPrompt(event.currentTarget.value)}
+                classNames={{
+                  root: classes.root,
+                  wrapper: classes.wrapper,
+                  input: classes.input,
+                }}
+              />
+
+              <Button
+                variant="filled"
+                color="dark"
+                size="md"
+                radius="xl"
+                mt={12}
+                disabled={!prompt}
+                onClick={() =>
+                  handleTextUpload(
+                    setMessage,
+                    setLoading,
+                    setDownloadUrl,
+                    open,
+                    close
+                  )
+                }
+                loading={loading}
+              >
+                Submit
+              </Button>
+            </Card>
+          )}
+
+          <Card
+            p={"sm"}
+            shadow="sm"
+            radius="md"
+            w={"100%"}
+            className="border-2 border-dashed border-gray-300  !bg-white/30"
+          >
             {/* big green success icon */}
             {/* download button */}
 
             {/* some big relevant icon/illustration */}
-            <Title ta={'center'}>Your brand new CV</Title>
-            <Text ta={'center'}>This is where your new CV will appear</Text>
+            <Title ta={"center"}>Your brand new CV</Title>
+            <Text ta={"center"}>This is where your new CV will appear</Text>
+
+            {downloadUrl && (
+              <button
+                onClick={() => handleDownload(downloadUrl)}
+                className="bg-gray-500 text-white p-2 w-full mt-2"
+              >
+                Download File
+              </button>
+            )}
           </Card>
         </SimpleGrid>
       </Layout>
+
+      <Information />
     </>
   );
 };
