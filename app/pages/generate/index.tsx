@@ -218,7 +218,7 @@ const index = (props: Partial<DropzoneProps>) => {
         </SimpleGrid>
       </Layout>
 
-      <Information />
+      <Information type={mode} />
     </>
   );
 };

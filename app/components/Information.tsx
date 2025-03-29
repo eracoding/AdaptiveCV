@@ -1,14 +1,20 @@
 import { ActionIcon, Affix, Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import GenerateInfo from "./modal/GenerateInfo";
+import OptimizeInfo from "./modal/OptimizeInfo";
 
-const Information = () => {
+const Information = ({ type }: { type: string }) => {
   const [opened, { open, close }] = useDisclosure(false);
 
   return (
     <>
-      <Modal opened={opened} onClose={close} withCloseButton={false}>
-        Modal without header, press escape or click on overlay to close
-        {/* A gif or video showing how to use it */}
+      <Modal
+        size={"lg"}
+        opened={opened}
+        onClose={close}
+        withCloseButton={false}
+      >
+        {type === "generate" ? <GenerateInfo /> : <OptimizeInfo />}
       </Modal>
 
       <Affix position={{ bottom: 20, right: 20 }}>
