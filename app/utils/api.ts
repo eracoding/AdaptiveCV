@@ -1,3 +1,4 @@
+import { notifications } from "@mantine/notifications";
 import { Dispatch, SetStateAction } from "react";
 
 export const handleDownload = (downloadUrl: string) => {
@@ -39,6 +40,12 @@ export const handleFileUpload = async (
     setDownloadUrl(URL.createObjectURL(blob));
   } catch (error: any) {
     setMessage("Error: " + error.message);
+    notifications.show({
+      title: "Error",
+      message: error.message,
+      color: "red",
+      position: "top-right",
+    });
   }
   setLoading(false);
   close();
@@ -67,6 +74,12 @@ export const handleTextUpload = async (
     setDownloadUrl(URL.createObjectURL(blob));
   } catch (error: any) {
     setMessage("Error: " + error.message);
+    notifications.show({
+      title: "Error",
+      message: error.message,
+      color: "red",
+      position: "top-right",
+    });
   }
   setLoading(false);
   close();
