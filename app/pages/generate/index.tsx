@@ -52,7 +52,7 @@ const index = (props: Partial<DropzoneProps>) => {
 
       <Layout>
         <SegmentedControl
-          mt={50}
+          // mt={50}
           value={mode}
           onChange={setMode}
           data={[
@@ -200,23 +200,15 @@ const index = (props: Partial<DropzoneProps>) => {
             shadow="sm"
             radius="md"
             w={"100%"}
+            mah={380}
             className="border-2 border-dashed border-gray-300  !bg-white/30"
           >
             {/* big green success icon */}
             {/* download button */}
-            {downloadUrl && <SuccessInfo />}
+            {downloadUrl && <SuccessInfo handleDownload={() => handleDownload(downloadUrl)} />}
 
             {/* some big relevant icon/illustration */}
             {!downloadUrl && <FileLand />}
-
-            {downloadUrl && (
-              <button
-                onClick={() => handleDownload(downloadUrl)}
-                className="bg-gray-500 text-white p-2 w-full mt-2"
-              >
-                Download File
-              </button>
-            )}
           </Card>
         </SimpleGrid>
       </Layout>

@@ -42,7 +42,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       </header>
 
       <main>
-        <Container size={"lg"} mt={"xl"}>
+        <Container size={"lg"} mt={"xl"} mb={"xl"}>
           {children}
         </Container>
       </main>
