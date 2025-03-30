@@ -23,10 +23,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <>
-      {/* <header className="h-16 bg-white/30 shadow-md ring-1 ring-gray-900/5 backdrop-blur-lg"> */}
-      <header className="fixed top-0 left-0 w-full h-16 bg-white/30 shadow-md ring-1 ring-gray-900/5 backdrop-blur-lg z-50">
+      <header className="h-16 bg-white/30 shadow-md ring-1 ring-gray-900/5 backdrop-blur-lg">
+      {/* <header className="fixed top-0 left-0 w-full h-16 bg-white/30 shadow-md ring-1 ring-gray-900/5 backdrop-blur-lg z-50"> */}
         <Flex align={"center"} h={"100%"} px={"xl"} justify={"space-between"}>
-          {/* <h1>LOGO</h1> */}
           <ActionIcon
             variant="transparent"
             size={"xl"}
@@ -35,15 +34,15 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           >
             <Image src="/logo.png" alt="logo" width={50} height={50} />
           </ActionIcon>
-          <Group gap="sm">
+          {/* <Group gap="sm">
             <NavButton link={"/generate"} name={"Generate"} />
             <NavButton link={"/optimize"} name={"Optimize"} />
-          </Group>
+          </Group> */}
         </Flex>
       </header>
 
-      <main className="min-h-screen">
-        <Container size={"lg"} mt={"xl"}>
+      <main>
+        <Container size={"lg"} mt={"xl"} mb={"xl"}>
           {children}
         </Container>
       </main>

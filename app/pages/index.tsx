@@ -3,7 +3,7 @@ import Link from "next/link";
 import ExpandingArrow from "@/components/expanding-arrow";
 import { Suspense } from "react";
 import Welcome from "@/components/welcome";
-import { Group } from "@mantine/core";
+import { Box, Group } from "@mantine/core";
 
 export default function Home() {
   return (
@@ -23,9 +23,32 @@ export default function Home() {
         <ExpandingArrow />
       </Link>
 
-      <Group gap="lg" mb={5}>
-        <Image src="/logo.png" alt="logo" width={70} height={70} />
-        <h1 className="pt-4 pb-8 bg-gradient-to-br from-black via-[#171717] to-[#575757] bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent md:text-7xl">
+      <Group gap="lg" mb={"32px"} mt={"20px"} align="center">
+        <Box
+          pos={"relative"}
+          w={{
+            base: "10vw",
+            sm: "10vw",
+            md: "10vw",
+            lg: "10vw",
+          }}
+          h={{
+            base: "10vw",
+            sm: "10vw",
+            md: "10vw",
+            lg: "10vw",
+          }}
+          maw={"70px"}
+          mah={"70px"}
+        >
+          <Image
+            src="/logo.png"
+            alt="logo"
+            layout="fill"
+            objectFit="contain"
+          />
+        </Box>
+        <h1 className="pb-2 bg-gradient-to-br from-black via-[#171717] to-[#575757] bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent md:text-7xl">
           AdaptiveCV
         </h1>
       </Group>
