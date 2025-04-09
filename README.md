@@ -34,7 +34,7 @@ AdaptiveCV
 
 ## Methodology
 
-![](https://github.com/eracoding/AdaptiveCV/blob/main/media/pipe.png)
+![](https://github.com/eracoding/AdaptiveCV/blob/main/media/pipeline.png)
 
 ### Workflow
 The workflow of AdaptiveCV consists of:
