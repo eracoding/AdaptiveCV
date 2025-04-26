@@ -3,6 +3,8 @@
 ## Overview
 AdaptiveCV is an advanced AI-driven platform designed to automatically generate, optimize, and personalize resumes tailored to specific job descriptions.Leveraging Large Language Models (LLMs), AdaptiveCV helps job seekers create high-quality, ATS-friendly, and recruiter-optimized resumes — significantly increasing interview opportunities with minimal manual effort.
 
+ - Access project from https://adaptivecv.streamlit.app/
+
 ## Problem Statement
 Creating job-specific resumes increases interview chances but remains an impractical task due to its time-consuming nature. Traditional methods of resume tailoring are either manual and resource-intensive or rely on simplistic keyword matching and static templates, failing to dynamically adjust to unique job requirements.
 
