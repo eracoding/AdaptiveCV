@@ -1,118 +1,118 @@
-\ProvidesClass{cvtemplate}[2025/04/04 v1.0 Custom CV Class]
+\ProvidesClass{resume}[2010/07/10 v0.9 Resume class]
 
-% Base class and font size
-\LoadClass[10pt]{article}
+\LoadClass[10pt]{article} % Font size and paper type
 
-% Layout packages
-\usepackage[parfill]{parskip} % No indentation at the start of paragraphs
-\usepackage{array}            % Bold tabular columns
-\usepackage{ifthen}           % Logic control for conditionals
+\usepackage[parfill]{parskip} % Remove paragraph indentation
+\usepackage{array} % Required for boldface (\bf and \bfseries) tabular columns
+\usepackage{ifthen} % Required for ifthenelse statements
 
-% No page numbering
-\pagestyle{empty}
+\pagestyle{empty} % Suppress page numbers
 
-% ======================
-% Personal Header Setup
-% ======================
+%====
+%	HEADINGS COMMANDS: Commands for printing name and address
+%====
 
-\def \setname#1{\def\cv@name{#1}}
-\def \cv@name {}
-\def \sep {$\diamond$}
+\def \name#1{\def\@name{#1}} % Defines the \name command to set name
+\def \@name {} % Sets \@name to empty by default
+\def \addressSep {$\diamond$} % Set default address separator to a diamond
 
-% Initialize optional contact lines
-\let \lineone \relax
-\let \linetwo \relax
-\let \linethree \relax
+% One, two or three address lines can be specified 
+\let \@addressone \relax
+\let \@addresstwo \relax
+\let \@addressthree \relax
 
-% Command to assign contact details, supports 1 to 3 lines
-\def \contactinfo #1{
-  \@ifundefined{linetwo}{
-    \def \linetwo {#1}
+% \address command can be used to set the first, second, and third address (last 2 optional)
+\def \address #1{
+  \@ifundefined{@addresstwo}{
+    \def \@addresstwo {#1}
   }{
-  \@ifundefined{linethree}{
-    \def \linethree {#1}
+  \@ifundefined{@addressthree}{
+  \def \@addressthree {#1}
   }{
-    \def \lineone {#1}
+     \def \@addressone {#1}
   }}
 }
 
-% Command to print a single line of contact
-\def \showline #1{
+% \printaddress is used to style an address line (given as input)
+\def \printaddress #1{
   \begingroup
-    \def \\ {\sep\ }
+    \def \\ {\addressSep\ }
     \centerline{#1}
   \endgroup
-  \gapafterline
+  \par
+  \addressskip
 }
 
-% Name display at top
-\def \displayname {
+% \printname is used to print the name as a page header
+\def \printname {
   \begingroup
-    \hfil{\MakeUppercase{\nameformat\bf \cv@name}}\hfil
-    \gapaftername\break
+    \hfil{\MakeUppercase{\namesize\bf \@name}}\hfil
+    \nameskip\break
   \endgroup
 }
 
-% ======================
-% Automatic Header Output
-% ======================
+%====
+%	PRINT THE HEADING LINES
+%====
 
-\let\original@document=\document
+\let\ori@document=\document
 \renewcommand{\document}{
-  \original@document
-  \displayname
-  \@ifundefined{lineone}{}{\showline{\lineone}}
-  \@ifundefined{linetwo}{}{\showline{\linetwo}}
-  \@ifundefined{linethree}{}{\showline{\linethree}}
+  \ori@document  % Begin document
+  \printname % Print the name specified with \name
+  \@ifundefined{@addressone}{}{ % Print the first address if specified
+    \printaddress{\@addressone}}
+  \@ifundefined{@addresstwo}{}{ % Print the second address if specified
+    \printaddress{\@addresstwo}}
+     \@ifundefined{@addressthree}{}{ % Print the third address if specified
+    \printaddress{\@addressthree}}
 }
 
-% ======================
-% Section Title Styling
-% ======================
+%====
+%	SECTION FORMATTING
+%====
 
-\newenvironment{Section}[1]{
-  \MakeUppercase{\textbf{#1}}
-  \gapbeforeline
-  \hrule
-  \begin{list}{}{
-    \setlength{\leftmargin}{1.5em}
+% Defines the rSection environment for the large sections within the CV
+\newenvironment{rSection}[1]{ % 1 input argument - section name
+  \MakeUppercase{\textbf{#1}} % Section title
+  \sectionlineskip
+  \hrule % Horizontal line
+  \begin{list}{}{ % List for each individual item in the section
+    \setlength{\leftmargin}{1.5em} % Margin within the section
   }
   \item[]
 }{
   \end{list}
 }
 
-% ======================
-% Work Experience Format
-% ======================
+%====
+%	WORK EXPERIENCE FORMATTING
+%====
 
-\newenvironment{Experience}[4]{ % org, date, title, location
-  {\textbf{#1}} \hfill {#2}
-  \ifthenelse{\equal{#3}{}}{}{
+\newenvironment{rSubsection}[4]{ % 4 input arguments - company name, year(s) employed, job title and location
+  {\textbf{#1}} \hfill {#2} % Bold company name and date on the right
+  \ifthenelse{\equal{#3}{}}{}{ % If the third argument is not specified, don't print the job title and location line
     \\
-    \textbf{\emph{#3}} \hfill \textbf{\emph{#4}}
+    \textbf{{\em #3}} \hfill \textbf{{\em #4}} % Italic job title and location
   }\smallskip
-  \begin{list}{$\cdot$}{\leftmargin=0.75em}
-    \itemsep -0.4em \vspace{-0.75em}
-}{
-  \end{list}
+  \begin{list}{$\cdot$}{\leftmargin=0.75em} % \cdot used for bullets, no indentation
+    \itemsep -0.4em \vspace{-0.75em} % Compress items in list together for aesthetics
+  }{
+  \end{list} % Some space after the list of bullet points
 }
 
-\newenvironment{AdditionalWork}[2]{ % title, date
-  {\textbf{\emph{#1}}} \hfill \textbf{#2}
+\newenvironment{rSubWork}[2]{ % 4 input arguments - company name, year(s) employed, job title and location
+  {\textbf{{\em #1}}} \hfill \textbf{{#2}} % Bold company name and date on the right
   \smallskip
-  \begin{list}{$\cdot$}{\leftmargin=0.75em}
-    \itemsep -0.4em \vspace{-0.75em}
-}{
-  \end{list}
+  \begin{list}{$\cdot$}{\leftmargin=0.75em} % \cdot used for bullets, no indentation
+    \itemsep -0.4em \vspace{-0.75em} % Compress items in list together for aesthetics
+  }{
+  \end{list} % Some space after the list of bullet points
 }
 
-% ======================
-% Spacing and Font Sizes
-% ======================
 
-\def\nameformat{\Large}
-\def\gapafterline{\smallskip}
-\def\gapbeforeline{\medskip}
-\def\gapaftername{\bigskip}
-\def\gapaftersection{\medskip}
+% The below commands define the whitespace after certain things in the document - they can be \smallskip, \medskip or \bigskip
+\def\namesize{\Large} % Size of the name at the top of the document
+\def\addressskip{\smallskip} % The space between the two address (or phone/email) lines
+\def\sectionlineskip{\medskip} % The space above the horizontal line for each section 
+\def\nameskip{\bigskip} % The space after your name at the top
+\def\sectionskip{\medskip} % The space after the heading section

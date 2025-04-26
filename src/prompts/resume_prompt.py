@@ -46,7 +46,7 @@ Extract structured, job-relevant information from the description and company su
 
 <focus>
 - Extract and organize:
-  1. Keywords
+  1. Keywords (favor actionable skills, measurable competencies, and tools whenever possible)
   2. Core duties and responsibilities
   3. Required and preferred qualifications
 - Prioritize clarity, conciseness, and completeness.
@@ -72,9 +72,10 @@ Generate a brief, impactful cover letter aligning my profile with the job requir
 <guidelines>
 - Summarize key qualifications in a concise bullet list.
 - Include 1-2 specific achievements that directly relate to the role.
+- It is acceptable to creatively extrapolate or emphasize experiences to tightly align with the job description, as long as it fits my general background.
 - Keep the letter within 250-300 words.
 - Use a tone that balances professionalism and personality.
-- Do NOT copy text directly from the resume—add context and value.
+- Do NOT copy text directly from the resume—add context and additional value.
 
 Format:
 Dear Hiring Manager,

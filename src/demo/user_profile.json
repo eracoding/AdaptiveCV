@@ -1,0 +1,191 @@
+{
+    "full_name": "Ulugbek Shernazarov",
+    "summary": "Applied AI researcher and developer with a strong foundation in computer vision, machine learning, and systems design. Experienced in deploying large-scale biometric recognition systems, visual tracking pipelines, and federated learning setups. Skilled in building robust end-to-end AI solutions with a focus on performance, reliability, and scalability.",
+    "contact_number": "+66 61 658 2604",
+    "email_address": "u.shernaz4rov@gmail.com",
+    "media_profiles": {
+        "linkedin": "https://www.linkedin.com/in/ulugbek-shernazarov-9343831a8/",
+        "github": "https://github.com/eracoding",
+        "medium": null,
+        "devpost": null
+    },
+    "work_experience": [
+        {
+            "position": "Machine Learning Engineer",
+            "employer": "AI Implementation Group",
+            "location": "Uzbekistan",
+            "start": "Mar 2023",
+            "end": "Aug 2024",
+            "contributions": [
+                "Designed long-range face recognition system using PoE cameras, improving recognition by 30%.",
+                "Deployed biometric pipelines in Docker containers, reducing deployment time by 15%.",
+                "Created a scalable Elasticsearch feature index for 1.5M face embeddings, improving search efficiency by 35%.",
+                "Automated deployment using Jenkins CI/CD, ensuring consistent rollouts and minimal downtime."
+            ]
+        },
+        {
+            "position": "Software Developer Intern",
+            "employer": "Megafon",
+            "location": "Remote, Russia",
+            "start": "Jul 2022",
+            "end": "Oct 2022",
+            "contributions": [
+                "Developed Python-based scraping tools with Selenium, improving data acquisition by 30%.",
+                "Enhanced PostgreSQL queries using virtual tables and optimized system monitoring with Prometheus/Grafana.",
+                "Built CI/CD flows using Jenkins and Ansible for streamlined automation in Unix environments."
+            ]
+        },
+        {
+            "position": "Python Developer Intern",
+            "employer": "Exadel",
+            "location": "Uzbekistan",
+            "start": "Apr 2022",
+            "end": "Jun 2022",
+            "contributions": [
+                "Built Django-based REST APIs with JWT authentication using Djoser.",
+                "Orchestrated asynchronous tasks using Celery and RabbitMQ, boosting backend responsiveness.",
+                "Ensured production readiness with Pytest-based unit and integration tests."
+            ]
+        }
+    ],
+    "education": [
+        {
+            "degree": "Master of Science - Data Science and Artificial Intelligence",
+            "institution": "Asian Institute of Technology, Thailand",
+            "start": "Aug 2024",
+            "end": "May 2026",
+            "coursework": [
+                "Natural Language Processing",
+                "Computer Vision",
+                "Advanced Algorithms",
+                "Distributed Systems",
+                "Machine Learning"
+            ]
+        },
+        {
+            "degree": "Bachelor of Science - Computer Science and Software Engineering",
+            "institution": "Inha University in Tashkent, Uzbekistan",
+            "start": "Sep 2019",
+            "end": "May 2023",
+            "coursework": [
+                "Data Structures",
+                "Algorithms",
+                "Operating Systems",
+                "Computer Networks"
+            ]
+        }
+    ],
+    "skill_section": [
+        {
+            "title": "Programming Languages",
+            "items": [
+                "Python",
+                "C++"
+            ]
+        },
+        {
+            "title": "Frameworks & ML Libraries",
+            "items": [
+                "PyTorch",
+                "TensorFlow",
+                "Langchain",
+                "nltk"
+            ]
+        },
+        {
+            "title": "DevOps & MLOps",
+            "items": [
+                "Docker",
+                "Kubernetes",
+                "MLflow",
+                "Jenkins",
+                "GitLab CI"
+            ]
+        },
+        {
+            "title": "Web Development",
+            "items": [
+                "Django",
+                "Flask",
+                "FastAPI"
+            ]
+        },
+        {
+            "title": "Databases",
+            "items": [
+                "PostgreSQL",
+                "MySQL",
+                "Elasticsearch",
+                "Chromadb",
+                "MongoDB"
+            ]
+        },
+        {
+            "title": "Tools & Platforms",
+            "items": [
+                "Git",
+                "AWS",
+                "Prometheus",
+                "Grafana"
+            ]
+        }
+    ],
+    "projects": [
+        {
+            "title": "Heavy Rain Image Restoration",
+            "category": "Research Project",
+            "repo_url": "https://github.com/eracoding/deraining_in_natural_scenes",
+            "resources": null,
+            "start": "Oct 2024",
+            "end": "Dec 2024",
+            "highlights": [
+                "Designed a two-stage rain image restoration pipeline combining physics-based modeling and conditional GANs.",
+                "Enhanced visual quality under heavy rain using depth-guided denoising; evaluated with PSNR and SSIM metrics."
+            ]
+        },
+        {
+            "title": "Real-Time Face Recognition and Tracking System",
+            "category": "Project",
+            "repo_url": "https://github.com/eracoding/face-recognition",
+            "resources": null,
+            "start": "Oct 2024",
+            "end": "Dec 2024",
+            "highlights": [
+                "Developed an end-to-end facial recognition and tracking system using ONNX models (SCRFD + AdaFace).",
+                "Integrated Telegram API for real-time alerting, enabling deployment on surveillance setups including CCTV and webcams."
+            ]
+        },
+        {
+            "title": "Loan Prediction with Personalized Advice using LLMs",
+            "category": "Academic Project",
+            "repo_url": "https://github.com/eracoding/pattaya-ml-ait",
+            "resources": null,
+            "start": "Oct 2024",
+            "end": "Dec 2024",
+            "highlights": [
+                "Trained a logistic regression model to classify loan applications.",
+                "Used Gemini 1.5 Flash to offer targeted LLM-generated suggestions to improve applicant approval chances."
+            ]
+        },
+        {
+            "title": "Federated Learning on MedMNIST Chest Dataset",
+            "category": "Research Project",
+            "repo_url": "https://github.com/eracoding/FIFAI-Summer-School-2024",
+            "resources": null,
+            "start": "Jul 2024",
+            "end": "Aug 2024",
+            "highlights": [
+                "Built a federated learning pipeline for chest disease classification using PyTorch and MedMNIST dataset.",
+                "Collaborated in a team for performance tuning and reproducibility during a Kaggle-style challenge."
+            ]
+        }
+    ],
+    "certifications": [],
+    "achievements": [
+        "Led a palm biometric recognition system project, enhancing organizational biometric capabilities.",
+        "Built and maintained a vector search system for facial embeddings with over 1.5 million images.",
+        "Implemented real-time surveillance system integrating facial recognition and Telegram alerts.",
+        "Volunteer at AIT, mentoring peers in Kaggle challenges and machine learning workshops.",
+        "Ex-member of the ML Club at Inha University, organized multiple coding events and talks."
+    ]
+}

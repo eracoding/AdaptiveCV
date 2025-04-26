@@ -1,3 +1,6 @@
+"""
+File: sections.py (scheme)
+"""
 from typing import List, Optional
 
 from pydantic import BaseModel, Field, HttpUrl

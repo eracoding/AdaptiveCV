@@ -1,17 +1,18 @@
-%==== PACKAGES AND DOCUMENT SETTINGS ====%
-
-\documentclass{cvtemplate} % Use the updated custom class
-\usepackage[left=0.25in,top=0.25in,right=0.25in,bottom=0.25in]{geometry}
+%==== PACKAGES AND OTHER DOCUMENT CONFIGURATIONS  ====%
+\documentclass{resume} % Use the custom resume.cls style
+\usepackage[left=0.25in,top=0.25in,right=0.25in,bottom=0.25in]{geometry} % Document margins
 \usepackage[T1]{fontenc}
-\usepackage{lmodern}
 \usepackage{xcolor}
-\usepackage{fontawesome}
-\usepackage{textcomp}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage{fontawesome} % For GitHub and LinkedIn symbols
+\usepackage{textcomp} % For mobile phone and email symbols
+\usepackage{xcolor}  % Required for defining custom colors
 \usepackage{hyperref}
-
-%==== Custom Colors for Hyperlinks ====%
-
+% Define your custom colors
 \definecolor{myblue}{RGB}{0, 164, 218}
+
+% Set hyperlink colors
 \hypersetup{
     colorlinks=true,
     linkcolor=myblue,
@@ -19,107 +20,118 @@
     urlcolor=myblue
 }
 
-%==== HEADER DETAILS ====%
-
-\setname{\VAR{personal.name}} % Set candidate's full name
-
-\contactinfo{
-\BLOCK{ if personal.phone }{\faPhone} \href{tel:\VAR{personal.phone}}{\VAR{personal.phone.replace(' ','')}} \quad \BLOCK{ endif }
-\BLOCK{ if personal.email }{\faEnvelope} \href{mailto:\VAR{personal.email}}{\VAR{personal.email}} \quad \BLOCK{ endif }
-\BLOCK{ if personal.github }{\faGithub} \href{\VAR{personal.github}}{\VAR{personal.github}} \quad \BLOCK{ endif }
-\BLOCK{ if personal.linkedin }{\faLinkedin} \href{\VAR{personal.linkedin}}{\VAR{personal.linkedin}} \BLOCK{ endif }
+%==== Headings ====%
+\name{\VAR{personal.full_name}} % Your name
+\address{
+\BLOCK{ if personal.contact_number }{\faPhone} \href{tel:\VAR{personal.contact_number}}{\VAR{personal.contact_number.replace(' ','')}} \quad \BLOCK{ endif }
+\BLOCK{ if personal.email_address }{\faEnvelope} \href{mailto:\VAR{personal.email_address}}{\VAR{personal.email_address}} \quad \BLOCK{ endif }
+\BLOCK{ if personal.github }{\faGithub} \href{\VAR{personal.github}}{GitHub} \quad \BLOCK{ endif }
+\BLOCK{ if personal.linkedin }{\faLinkedin} \href{\VAR{personal.linkedin}}{LinkedIn} \BLOCK{ endif }
 }
 
 \begin{document}
 
-%==== WORK EXPERIENCE ====%
-
+%===== WORK EXPERIENCE SECTION =====%
 \BLOCK{ if work_experience }
-    \begin{Section}{Work Experience}
+    \begin{rSection}{Work Experience}
         \BLOCK{ for exp in work_experience }
-            \begin{Experience}
-                {\VAR{exp.company}}
-                {\BLOCK{ if exp.from_date }\VAR{exp.from_date} -\BLOCK{ endif } \BLOCK{ if exp.to_date }\VAR{exp.to_date}\BLOCK{ endif }}
-                {\VAR{exp.role}}
-                {\VAR{exp.location}}
-                \BLOCK{ for point in exp.description }
+            \begin{rSubsection}
+                {\VAR{exp.position}}{\BLOCK{ if exp.start }\VAR{exp.start} -\BLOCK{ endif } \BLOCK{ if exp.end }\VAR{exp.end}\BLOCK{ endif }}
+                {\normalfont{\textit{\VAR{exp.employer}}}}
+                {\normalfont{\textit{\VAR{exp.location}}}}
+                \BLOCK{ for point in exp.contributions }
                     \item \VAR{point}
                 \BLOCK{ endfor }
-            \end{Experience}
+            \end{rSubsection}
         \BLOCK{ endfor }
-    \end{Section}
+    \end{rSection}
 \BLOCK{ endif }
 
-%==== EDUCATION ====%
-
+%==== EDUCATION SECTION ====%
 \BLOCK{ if education }
-\begin{Section}{Education}
+\begin{rSection}{Education}
     \BLOCK{ for school in education }
-        \BLOCK{ if school.university }
-            \textbf{\VAR{school.university}} \hfill {\VAR{school.from_date} - \VAR{school.to_date}} \\
-            \BLOCK{ if school.degree }{\VAR{school.degree}}\BLOCK{ endif }
-            \BLOCK{ if school.grade }\hfill (GPA: \VAR{school.grade})\BLOCK{ endif }\\
-            \BLOCK{ if school.coursework }
-                \textbf{\textit{Relevant Courses:}} \textit{\VAR{', '.join(school.coursework)}}
+        \BLOCK{ if school.institution }
+            \textbf{\VAR{school.institution}} \hfill {\VAR{school.start} - \VAR{school.end}} \\
+            \BLOCK{ if school.degree }
+                {\VAR{school.degree}}
             \BLOCK{ endif }
-        \BLOCK{ endif }
+            \BLOCK{ if school.grade }
+                \hfill {(GPA: \VAR{school.grade})}
+            \BLOCK{ endif } 
+            \BLOCK{ if school.coursework }
+                \\
+                \textbf{\textit{Relevant Courses:}} \textit{\VAR{', '.join(school.coursework)}}
+            \BLOCK{ endif } 
+        \BLOCK{ endif } 
+        \BLOCK{ if not loop.last }\\[0.5em]\BLOCK{ endif }
     \BLOCK{ endfor }
-\end{Section}
+\end{rSection}
 \BLOCK{ endif }
 
-%==== PROJECTS ====%
-
+% ==== PROJECTS SECTION =====%
 \BLOCK{ if projects }
-    \begin{Section}{Projects}
+    \begin{rSection}{Projects}
         \BLOCK{ for project in projects}
-            \begin{Experience}
-                \BLOCK{ if project.link}
-                    {\href{\VAR{project.link}}{\VAR{project.name}}}
+            \begin{rSubsection}
+                \BLOCK{ if project.repo_url}
+                    {\href{\VAR{project.repo_url}}{\VAR{project.title}}}
                 \BLOCK{else}
-                    {\VAR{project.name}}
+                    {\VAR{project.title}}
                 \BLOCK{ endif }
-                {\VAR{project.from_date} - \VAR{project.to_date}}{}{}
-                \BLOCK{ for point in project.description}
+                {\normalfont{\VAR{project.start} - \VAR{project.end}}}{}{}
+                \BLOCK{ for point in project.highlights}
                     \item \VAR{point}
                 \BLOCK{ endfor }
-            \end{Experience}
+            \end{rSubsection}
         \BLOCK{ endfor }
-    \end{Section}
+    \end{rSection}
 \BLOCK{ endif }
 
-%==== TECHNICAL SKILLS ====%
-
-\BLOCK{ if skill_section }
-    \begin{Section}{Technical Skills}
-        \begin{tabular}{@{} l @{\hspace{1ex}} l }
+%==== TECHNICAL SKILLS SECTION ====%
+\BLOCK{ if skill_section and skill_section|length > 0 }
+    \begin{rSection}{Technical Skills}
+        \begin{tabular}{ @{} l @{\hspace{1ex}} l }
             \BLOCK{ for section in skill_section }
-                \textbf{\VAR{section.name}}: \VAR{', '.join(section.skills)} \\
+                \textbf{\VAR{section['title']}:} 
+                \BLOCK{ if section['items'] is iterable }
+                    \VAR{section['items'] | join(', ')}
+                \BLOCK{ else }
+                    \VAR{section['items']}
+                \BLOCK{ endif }\\
             \BLOCK{ endfor }
-            \BLOCK{ if certifications }
-                \textbf{Certifications:}
-                \BLOCK{ for certification in certifications }
-                    \href{\VAR{certification.link}}{\textbf{\VAR{certification.name}}},\\
-                \BLOCK{ endfor }
-            \BLOCK{ endif }
         \end{tabular}
-    \end{Section}
+    \end{rSection}
 \BLOCK{ endif }
 
-%==== ACHIEVEMENTS ====%
 
+% CERTIFICATIONS SECTION
+\BLOCK{ if certifications and certifications|length > 0 }
+    \begin{rSection}{Certifications}
+        \begin{list}{$\cdot$}{\leftmargin=0.75em}
+            \itemsep -0.4em
+            \BLOCK{ for cert in certifications}
+                \item \href{\VAR{cert.url}}{\textbf{\VAR{cert.title}}} - \VAR{cert.issuer}
+            \BLOCK{ endfor }
+        \end{list}
+    \end{rSection}
+\BLOCK{ endif }
+
+% ACHIEVEMENTS SECTION
 \BLOCK{ if achievements }
-    \begin{Section}{Achievements}
-        \begin{AdditionalWork}{}{}
+    \begin{rSection}{Achievements}
+        \begin{list}{$\cdot$}{\leftmargin=0.75em}
+            \itemsep -0.4em
             \BLOCK{ for point in achievements}
                 \item \VAR{point}
             \BLOCK{ endfor }
-        \end{AdditionalWork}
-    \end{Section}
+        \end{list}
+    \end{rSection}
 \BLOCK{ endif }
 
-%==== KEYWORDS FOR ATS ====%
-
+\BLOCK{ if keywords }
 \newcommand\myfontsize{\fontsize{0.1pt}{0.1pt}\selectfont} \myfontsize \color{white}
 \VAR{keywords}
+\BLOCK{ endif }
 
 \end{document}
