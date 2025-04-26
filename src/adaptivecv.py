@@ -378,8 +378,6 @@ class AdaptiveCV:
                     job_description=job_description_str
                 )
 
-                print("Prompt: ", prompt)
-
                 # Get LLM Response
                 response = self.llm.get_response(
                     prompt=prompt,

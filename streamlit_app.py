@@ -123,18 +123,31 @@ def create_overleaf_button(resume_path):
 
 def display_pdf(pdf_path):
     """Display a PDF file in Streamlit."""
+    with open(pdf_path, "rb") as file:
+        bytes_data = file.read()
+
     try:
-        with open(pdf_path, "rb") as f:
-            base64_pdf = base64.b64encode(f.read()).decode('utf-8')
-        
-        pdf_display = f"""
-        <iframe src="data:application/pdf;base64,{base64_pdf}" width="100%" height="800" 
-        style="border: 1px solid #ddd; border-radius: 5px;" type="application/pdf"></iframe>
-        """
-        st.markdown(pdf_display, unsafe_allow_html=True)
+        base64_pdf = base64.b64encode(bytes_data).decode('utf-8')
     except Exception as e:
-        logger.error(f"Error displaying PDF: {e}")
-        st.error(f"Failed to display PDF: {e}")
+        base64_pdf = base64.b64encode(bytes_data)
+
+    # Iframe Embedding of PDF in HTML
+    pdf_display = F'<iframe src="data:application/pdf;base64,{base64_pdf}" type="application/pdf" style="width:100%; height:100vh;"></iframe>'
+    
+    st.markdown(pdf_display, unsafe_allow_html=True)
+
+    # try:
+    #     with open(pdf_path, "rb") as f:
+    #         base64_pdf = base64.b64encode(f.read()).decode('utf-8')
+        
+    #     pdf_display = f"""
+    #     <iframe src="data:application/pdf;base64,{base64_pdf}" width="100%" height="800" 
+    #     style="border: 1px solid #ddd; border-radius: 5px;" type="application/pdf"></iframe>
+    #     """
+    #     st.markdown(pdf_display, unsafe_allow_html=True)
+    # except Exception as e:
+    #     logger.error(f"Error displaying PDF: {e}")
+    #     st.error(f"Failed to display PDF: {e}")
 
 def calculate_metrics(resume_details, user_data, job_details):
     """Calculate similarity metrics for resume, user data, and job description."""
